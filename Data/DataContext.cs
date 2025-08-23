@@ -1,7 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using BowlingApp.Entity;
 using Microsoft.EntityFrameworkCore;
 
@@ -15,7 +11,8 @@ namespace BowlingApp.Data
 
 		}
 
+		public DbSet<User> Users { get; set; }
 		public DbSet<Game> Games { get; set; }
-		public DbSet<ScoreBoard> ScoreBoard { get; set; }
+		public DbSet<ScoreBoard> ScoreBoards { get; set; }
     }
 }
