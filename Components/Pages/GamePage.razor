@@ -1,0 +1,27 @@
+@page "/game"
+@rendermode InteractiveServer
+
+@foreach (var (name, i) in Names.Select((name, i) => (name, i)))
+{
+    <ScoreBoardPage Name=@name Scores=@AllScores[i]/>
+}
+
+<button @onclick="SaveScores">Save Scores</button>
+
+
+@code
+{
+	public uint[] ScoreReferences = new uint[4];
+	private List<List<uint>> AllScores = new List<List<uint>>();
+	public string[] Names = {"John", "Steve", "Bob", "Cheeze"};
+
+	protected override void OnInitialized()
+	{
+		AllScores = Names.Select(_ => new List<uint>(new uint[21])).ToList();
+	}
+
+	// Save scores to database
+	private void SaveScores() {
+		Console.WriteLine(AllScores[0]);
+	}
+}

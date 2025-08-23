@@ -1,0 +1,71 @@
+@page "/setup-game"
+@rendermode InteractiveServer
+@inject NavigationManager NavigationManager
+
+<h3>Create New Game</h3>
+
+<h4>Number of Players</h4>
+
+<select @bind="playerCount" @bind:after="UpdatePlayers">
+	@for (uint i = 1; i < 9; i++) {
+		<option value="@i">@i</option>
+	}
+</select>
+
+@if (playerCount > 0)
+{
+	<h4>Player Names:</h4>
+	<div>
+		@* In Blazor Server rendering is asynchronous, and the UI may re-render 
+		multiple times. If the for loop’s k is updated before the lambda executes, 
+		all textboxes end up binding to the last index.
+
+		Ex:
+			@for (var k = 0; k < playerCount; k++) 
+			can't use this for loop here because by the time we try to utilize "k"
+			it already equal to playerCount instead of the expected index value. For
+			whatever reason a foreach does not give me this issue.
+		*@
+        @foreach (var k in Enumerable.Range(0, playerCount))
+        {
+            <div>
+                <InputText @bind-Value="@playerNames[k]" class="form-control" @key="k" />
+            </div>
+        }
+    </div>
+
+	<button class="btn btn-primary" @onclick="CreateGame" disabled="@(!AllFieldsFilled)">
+    	Create Game
+	</button>
+}
+
+@* @{int z = 0;}
+@foreach (var name in playerNames) {
+	z++;
+	if (name != "" && z == playerCount) {
+
+	}
+} *@
+
+@code {
+    private int playerCount = 0;
+    private List<string> playerNames = new List<string>(new string[8]); // max 8 players
+
+	protected override void OnAfterRender(bool firstRender)
+    {
+        Console.WriteLine($"Component rendered. playerCount: {playerCount}, playerNames: [{string.Join(", ", playerNames)}]");
+    }
+	private void UpdatePlayers() {
+		Console.WriteLine("updating players");
+		playerNames = Enumerable.Repeat(string.Empty, playerCount).ToList();
+	}
+
+	private void CreateGame() {
+		Console.WriteLine("creating game");
+		NavigationManager.NavigateTo("/scoreboard/Test");
+
+	}
+
+	private bool AllFieldsFilled =>
+        playerNames.Count > 0 && playerNames.All(name => !string.IsNullOrWhiteSpace(name));
+}

@@ -1,0 +1,130 @@
+@rendermode InteractiveServer
+
+<table class="table">
+	<thead>
+		<tr>
+			<td>Name</td>
+			@for (int i = 0; i < Rounds; i++) {
+				<th>Round @(i+1)</th>
+			}
+			<td>Total</td>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<td>@Name</td>
+			@foreach (var z in Enumerable.Range(0, (Scores.Count/2) - 1)) {
+				<td>
+					<select @bind=Scores[z*2] @bind:after="() => UpdateScore(z*2)">
+						@for (uint i = 0; i < 10; i++) {
+							<option value="@i">@i</option>
+						}
+						<option value=10>X</option>
+					</select>
+
+					@if (ShowSecond[z]) {
+						<select @bind=Scores[(z*2)+1] @bind:after="() => UpdateScore((z*2)+1)">
+							@for (uint i = 0; i <= 10 - Scores[(z*2)]; i++) {
+								<option value="@i">@i</option>
+							}
+						</select>
+					}
+				</td>
+			}
+			<td>
+				<select @bind=Scores[18] @bind:after="() => UpdateLastScore(18)">
+					@for (uint i = 0; i < 10; i++) {
+						<option value="@i">@i</option>
+					}
+					<option value=10>X</option>
+				</select>
+
+				<select @bind=Scores[19] @bind:after="() => UpdateLastScore(19)">
+					@for (uint i = 0; i <= 10 - (Scores[18] % 10) && i != 10; i++) {
+						<option value="@i">@i</option>
+					}
+					@if (Scores[18] == 10) {
+						<option value=10>X</option>
+					}
+				</select>
+				
+				@if (ShowSecond[Rounds - 1]) {
+					<select @bind=Scores[20] @bind:after="() => UpdateLastScore(20)">
+						@for (uint i = 0; i < 10; i++) {
+							<option value="@i">@i</option>
+						}
+
+						@if ((Scores[18] == 10 && Scores[19] == 10) || (Scores[18] + Scores[19] == 10)) {
+							<option value=10>X</option>
+						}
+					</select>
+				}
+			</td>
+
+			<td>@Total</td>
+		</tr>
+	</tbody>
+</table>
+
+
+@code {
+	[Parameter]
+	public string? Name { get; set; }
+	[Parameter]
+	public List<uint> Scores { get; set; } = new List<uint>();
+	private List<bool> ShowSecond = new List<bool>(new bool[10]); // one flag per frame
+	private int Rounds = 10;
+	private uint Total = 0;
+
+	protected override void OnInitialized()
+    {
+        Console.WriteLine($"The passed Name is {Name}");
+    }
+
+	private void UpdateScore(int ScoreIndex)
+    {
+		Console.WriteLine(ScoreIndex);
+
+		if ((ScoreIndex % 2) == 0) {
+			Scores[ScoreIndex+1] = 0;
+			ShowSecond[ScoreIndex/2] = (Scores[ScoreIndex] != 10);
+		}
+
+		Total = 0;
+		foreach (var score in Scores) {
+			Total += score;
+		}
+    }
+
+	private void UpdateLastScore(int ScoreIndex)
+    {
+		Console.WriteLine(ScoreIndex);
+		if (ScoreIndex == 18) {
+			Scores[19] = 0;
+			Scores[20] = 0;
+		}
+
+		if (ScoreIndex == 19) {
+			Scores[20] = 0;
+		}
+
+		Console.WriteLine(ScoreIndex);
+
+		if (ScoreIndex != 20) {
+			if ((Scores[18] + Scores[19]) > 9) {
+				ShowSecond[ScoreIndex/2] = true;
+			} else {
+				ShowSecond[ScoreIndex/2] = false;
+			}
+		}
+
+		Console.WriteLine(ScoreIndex);
+
+		Total = 0;
+		foreach (var score in Scores) {
+			Total += score;
+		}
+
+		Console.WriteLine(ScoreIndex);
+    }
+}

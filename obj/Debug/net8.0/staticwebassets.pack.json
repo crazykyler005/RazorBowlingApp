@@ -1,0 +1,41 @@
+{
+  "Files": [
+    {
+      "Id": "/home/smithy/repos/BowlingApp/obj/Debug/net8.0/scopedcss/projectbundle/BowlingApp.bundle.scp.css",
+      "PackagePath": "staticwebassets/BowlingApp.bundle.scp.css"
+    },
+    {
+      "Id": "/home/smithy/repos/BowlingApp/wwwroot/app.css",
+      "PackagePath": "staticwebassets/app.css"
+    },
+    {
+      "Id": "/home/smithy/repos/BowlingApp/wwwroot/bootstrap/bootstrap.min.css",
+      "PackagePath": "staticwebassets/bootstrap/bootstrap.min.css"
+    },
+    {
+      "Id": "/home/smithy/repos/BowlingApp/wwwroot/bootstrap/bootstrap.min.css.map",
+      "PackagePath": "staticwebassets/bootstrap/bootstrap.min.css.map"
+    },
+    {
+      "Id": "/home/smithy/repos/BowlingApp/wwwroot/favicon.png",
+      "PackagePath": "staticwebassets/favicon.png"
+    },
+    {
+      "Id": "obj/Debug/net8.0/staticwebassets/msbuild.BowlingApp.Microsoft.AspNetCore.StaticWebAssets.props",
+      "PackagePath": "build\\Microsoft.AspNetCore.StaticWebAssets.props"
+    },
+    {
+      "Id": "obj/Debug/net8.0/staticwebassets/msbuild.build.BowlingApp.props",
+      "PackagePath": "build\\BowlingApp.props"
+    },
+    {
+      "Id": "obj/Debug/net8.0/staticwebassets/msbuild.buildMultiTargeting.BowlingApp.props",
+      "PackagePath": "buildMultiTargeting\\BowlingApp.props"
+    },
+    {
+      "Id": "obj/Debug/net8.0/staticwebassets/msbuild.buildTransitive.BowlingApp.props",
+      "PackagePath": "buildTransitive\\BowlingApp.props"
+    }
+  ],
+  "ElementsToRemove": []
+}
