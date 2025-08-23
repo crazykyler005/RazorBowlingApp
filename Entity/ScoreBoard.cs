@@ -1,18 +1,20 @@
-using Microsoft.AspNetCore.Diagnostics;
-using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
 
 namespace BowlingApp.Entity
 {
 	public class ScoreBoard
 	{
+		[Key]
 		public int Id { get; set; }
-		public int GameId { get; set; }
 
-		[MaxLength(30)]
-		public string? PlayerName { get; set; }
-		public int PlayerPosition { get; set; }
-		public List<uint> Scores { get; set; } = new List<uint>(new uint[21]); // pre-sized to 21 zeros
+		[MaxLength(120)]
+		public string? PlayerNames { get; set; } // up to 8 names seperated by a ;
+		public List<uint>? Scores { get; set; } = new List<uint>(new uint[21]); // pre-sized to 21 zeros
+
+		// Foreign key
+		public int GameId { get; set; }
+		// Navigation properties
+		public Game Game { get; set; }
 	}
 }
 
