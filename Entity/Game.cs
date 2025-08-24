@@ -14,6 +14,4 @@ namespace BowlingApp.Entity
 		public ICollection<ScoreBoard> Games { get; set; } = new List<ScoreBoard>();
 		public User? User { get; set; }
 	}
-
-
 }
