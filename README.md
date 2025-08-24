@@ -24,7 +24,7 @@ mysql -u root # connecting to mysql
 CREATE USER 'myuser'@'localhost' IDENTIFIED BY 'mypassword';
 
 CREATE DATABASE IF NOT EXISTS bowlingdb;
-GRANT ALL PRIVILEGES ON bowlingdb.* TO 'test'@'localhost';
+GRANT ALL PRIVILEGES ON bowlingdb.* TO 'myuser'@'localhost';
 FLUSH PRIVILEGES;
 EXIT;
 
