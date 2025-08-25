@@ -13,7 +13,7 @@
 	<tbody>
 		<tr>
 			<td>@Name</td>
-			@foreach (var z in Enumerable.Range(0, (Scores.Count/2) - 1)) {
+			@foreach (var z in Enumerable.Range(0, (Scores.Length/2) - 1)) {
 				<td>
 					<select @bind=Scores[z*2] @bind:after="() => UpdateScore(z*2)">
 						@for (uint i = 0; i < 10; i++) {
@@ -71,7 +71,7 @@
 	[Parameter]
 	public string? Name { get; set; }
 	[Parameter]
-	public List<uint> Scores { get; set; } = new List<uint>();
+	public uint[] Scores { get; set; } = Array.Empty<uint>();
 	private List<bool> ShowSecond = new List<bool>(new bool[10]); // one flag per frame
 	private int Rounds = 10;
 	private uint Total = 0;
@@ -83,7 +83,7 @@
 
 	private void UpdateScore(int ScoreIndex)
     {
-		Console.WriteLine(ScoreIndex);
+		@* Console.WriteLine(ScoreIndex); *@
 
 		if ((ScoreIndex % 2) == 0) {
 			Scores[ScoreIndex+1] = 0;
@@ -98,7 +98,7 @@
 
 	private void UpdateLastScore(int ScoreIndex)
     {
-		Console.WriteLine(ScoreIndex);
+		@* Console.WriteLine(ScoreIndex); *@
 		if (ScoreIndex == 18) {
 			Scores[19] = 0;
 			Scores[20] = 0;
@@ -108,8 +108,6 @@
 			Scores[20] = 0;
 		}
 
-		Console.WriteLine(ScoreIndex);
-
 		if (ScoreIndex != 20) {
 			if ((Scores[18] + Scores[19]) > 9) {
 				ShowSecond[ScoreIndex/2] = true;
@@ -118,13 +116,9 @@
 			}
 		}
 
-		Console.WriteLine(ScoreIndex);
-
 		Total = 0;
 		foreach (var score in Scores) {
 			Total += score;
 		}
-
-		Console.WriteLine(ScoreIndex);
     }
 }

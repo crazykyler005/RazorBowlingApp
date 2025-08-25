@@ -1,6 +1,7 @@
 using BowlingApp.Components;
 using Microsoft.EntityFrameworkCore;
 using BowlingApp.Data;
+using BowlingApp.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -10,6 +11,8 @@ builder.Services.AddDbContext<DataContext>(options =>
         builder.Configuration.GetConnectionString("DefaultConnection"),
         new MySqlServerVersion(new Version(8, 0, 36)) // match your MySQL version
     ));
+
+builder.Services.AddScoped<IGameService, GameService>();
 
 // Add services to the container.
 builder.Services.AddRazorComponents()

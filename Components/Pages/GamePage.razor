@@ -11,17 +11,17 @@
 
 @code
 {
-	public uint[] ScoreReferences = new uint[4];
-	private List<List<uint>> AllScores = new List<List<uint>>();
+	// public uint[] ScoreReferences = new uint[4];
+	private List<uint[]> AllScores = new();
 	public string[] Names = {"John", "Steve", "Bob", "Cheeze"};
 
 	protected override void OnInitialized()
 	{
-		AllScores = Names.Select(_ => new List<uint>(new uint[21])).ToList();
+		AllScores = Names.Select(_ => new uint[21]).ToList();
 	}
 
 	// Save scores to database
 	private void SaveScores() {
-		Console.WriteLine(AllScores[0]);
+		Console.WriteLine(string.Join(",", AllScores[0]));
 	}
 }

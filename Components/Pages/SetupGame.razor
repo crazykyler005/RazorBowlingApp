@@ -1,4 +1,7 @@
 @page "/setup-game"
+@using BowlingApp.Entity
+@using BowlingApp.Services
+@inject IGameService GameService
 @rendermode InteractiveServer
 @inject NavigationManager NavigationManager
 
@@ -50,6 +53,7 @@
 @code {
     private int playerCount = 0;
     private List<string> playerNames = new List<string>(new string[8]); // max 8 players
+	@* private Game game = new Game(); *@
 
 	protected override void OnAfterRender(bool firstRender)
     {
@@ -63,6 +67,9 @@
 	private void CreateGame() {
 		// TODO: have this button create a object in game table with players names being the only collected form item
 		// and x scoresboards are created for a "game" based on the number of players
+		@* game.PlayerNames = string.Join(";", playerNames);
+		game.
+		await GameService.AddGame(game) *@
 		Console.WriteLine("creating game");
 		NavigationManager.NavigateTo("/game");
 

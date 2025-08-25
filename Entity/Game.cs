@@ -8,11 +8,15 @@ namespace BowlingApp.Entity
 		public int Id { get; set; }
 		public DateTime DateCreated { get; set; } = DateTime.UtcNow;
 
+		[Required]
+		[MaxLength(120)]
+		public string PlayerNames { get; set; } = string.Empty; // up to 8 names seperated by a ;
+
 		// Foreign key
 		[Required]
 		public int UserId { get; set; }
 		// Navigation properties
-		public ICollection<ScoreBoard> Games { get; set; } = new List<ScoreBoard>();
+		public ICollection<ScoreBoard> ScoreBoards { get; set; } = new List<ScoreBoard>();
 		public User User { get; set; } = new User();
 	}
 }
