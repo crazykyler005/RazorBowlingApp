@@ -1,4 +1,5 @@
-After cloning the repo type `dotnet build` to build the project and generate the temporary folders `bin/` and `obj`.
+After cloning the repo type `dotnet build` to build the project and generate the temporary folders `bin/` and `obj/`.
+
 To get the project running locally type simply type `dotnet run` in the terminal while cd'ed into the root directory of the project
 
 ## Setting up local mysql db connection
