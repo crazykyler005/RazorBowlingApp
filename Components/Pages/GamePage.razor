@@ -3,6 +3,7 @@
 @using BowlingApp.Services
 @inject IGameService GameService
 @inject IScoreBoardService ScoreBoardService
+@inject NavigationManager Navigation
 @rendermode InteractiveServer
 
 @if (AllScores.Any())
@@ -42,5 +43,7 @@ else
 	{
 		await ScoreBoardService.UpdateScoreBoards(scoreBoards);
 		Console.WriteLine("Updated scoreboards for player(s)");
+		
+		Navigation.NavigateTo("/game-list/1");
 	}
 }
