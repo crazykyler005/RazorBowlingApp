@@ -7,5 +7,6 @@ namespace BowlingApp.Services
 		Task<User> CreateUser(User user);
 		Task<User> GetUser(int UserId);
 		Task<List<User>> GetAllUsers();
+		Task DeleteAllUserData(int UserId);
     }
 }

@@ -8,5 +8,6 @@ namespace BowlingApp.Services
 		Task<List<Game>> GetAllGamesFromUserId(int UserId);
 		Task<List<Game>> GetAllGames();
 		Task<Game> GetGame(int GameId);
+		Task DeleteGame(int GameId);
 	}
 }

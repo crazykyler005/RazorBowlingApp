@@ -10,6 +10,8 @@
 	<h3>Game List:</h3><br>
 
 	@foreach (var game in games) {
+	<div style="display: flex; align-items: center; gap: 10px;">
+		<button @onclick="() => EditGame(game.Id)">Edit</button><button @onclick="() => DeleteGame(game.Id)">Delete</button>
 		<table class="table">
 			<thead>
 				<tr>
@@ -24,6 +26,7 @@
 				</tr>
 			</tbody>
 		</table>
+	</div>
 	}
 }
 
@@ -57,8 +60,17 @@
 		return Total;
 	}
 
+	private void EditGame(int GameId) {
+		Navigation.NavigateTo("/game/" + GameId);
+	}
+
+	private async Task DeleteGame(int GameId) {
+		await GameService.DeleteGame(GameId);
+		Navigation.NavigateTo(Navigation.Uri, forceLoad: true);
+	}
+
 	private void GotoSetupPage()
 	{
-		Navigation.NavigateTo("/setup-game"); // replace with your route
+		Navigation.NavigateTo("/setup-game");
 	}
 }

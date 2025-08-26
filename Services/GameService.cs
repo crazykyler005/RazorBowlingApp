@@ -33,7 +33,7 @@ namespace BowlingApp.Services
 			var games = await _context.Games
 				.Where(u => u.UserId == UserId)
 				.ToListAsync();
-			
+
 			return games;
 		}
 
@@ -50,6 +50,21 @@ namespace BowlingApp.Services
 				.FirstAsync(u => u.Id == GameId);
 
 			return game;
+		}
+		
+		public async Task DeleteGame(int GameId)
+		{
+			var game = await _context.Games
+				.Include(g => g.ScoreBoards)
+				.FirstOrDefaultAsync(u => u.Id == GameId);
+
+			if (game != null)
+			{
+				// TODO: add casade delete to migration context
+				_context.ScoreBoards.RemoveRange(game.ScoreBoards);
+				_context.Games.Remove(game);
+				await _context.SaveChangesAsync();
+			}
 		}
 	}
 }
