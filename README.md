@@ -38,11 +38,11 @@ To auto-generate a mysql database from etities simply run one of the following s
 ### Linxu
 ```
 chmod +x db_generation.sh # makes the script executable
-db_generation.sh
+./db_generation.sh
 ```
 ### Windows
 ```
-db_generation.bat
+./db_generation.bat
 ```
 ## Planned features
 - Add code to generate a mysql database that can be ran locally
