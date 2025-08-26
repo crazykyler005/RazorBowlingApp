@@ -13,6 +13,8 @@ builder.Services.AddDbContext<DataContext>(options =>
     ));
 
 builder.Services.AddScoped<IGameService, GameService>();
+builder.Services.AddScoped<IUserService, UserService>();
+builder.Services.AddScoped<IScoreBoardService, ScoreBoardService>();
 
 // Add services to the container.
 builder.Services.AddRazorComponents()
@@ -33,6 +35,8 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 app.UseAntiforgery();
 
+// upgrading to version 8.0.2 or later will allow us to two blazor pages from rendering twice by allow to use this parameter
+//.AddInteractiveServerRenderMode(options => options.Prerender = false);
 app.MapRazorComponents<App>()
     .AddInteractiveServerRenderMode();
 

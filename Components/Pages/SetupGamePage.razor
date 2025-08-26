@@ -42,14 +42,6 @@
 	</button>
 }
 
-@* @{int z = 0;}
-@foreach (var name in playerNames) {
-	z++;
-	if (name != "" && z == playerCount) {
-
-	}
-} *@
-
 @code {
     private int playerCount = 0;
     private List<string> playerNames = new List<string>(new string[8]); // max 8 players
@@ -64,15 +56,12 @@
 		playerNames = Enumerable.Repeat(string.Empty, playerCount).ToList();
 	}
 
-	private void CreateGame() {
+	async Task CreateGame() {
 		// TODO: have this button create a object in game table with players names being the only collected form item
 		// and x scoresboards are created for a "game" based on the number of players
-		@* game.PlayerNames = string.Join(";", playerNames);
-		game.
-		await GameService.AddGame(game) *@
+		int gameId = await GameService.CreateGame(1, playerNames);
 		Console.WriteLine("creating game");
-		NavigationManager.NavigateTo("/game");
-
+		NavigationManager.NavigateTo("/game/" + gameId);
 	}
 
 	private bool AllFieldsFilled =>

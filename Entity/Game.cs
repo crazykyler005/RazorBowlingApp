@@ -10,13 +10,14 @@ namespace BowlingApp.Entity
 
 		[Required]
 		[MaxLength(120)]
-		public string PlayerNames { get; set; } = string.Empty; // up to 8 names seperated by a ;
+		public string PlayerNames { get; set; } = null!; // up to 8 names seperated by a ;
 
 		// Foreign key
 		[Required]
 		public int UserId { get; set; }
 		// Navigation properties
+		public User User { get; set; } = null!;
+		// Collections
 		public ICollection<ScoreBoard> ScoreBoards { get; set; } = new List<ScoreBoard>();
-		public User User { get; set; } = new User();
 	}
 }

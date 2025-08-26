@@ -1,27 +1,46 @@
-@page "/game"
+@page "/game/{GameId:int}"
+@using BowlingApp.Entity
+@using BowlingApp.Services
+@inject IGameService GameService
+@inject IScoreBoardService ScoreBoardService
 @rendermode InteractiveServer
 
-@foreach (var (name, i) in Names.Select((name, i) => (name, i)))
+@if (AllScores.Any())
 {
-    <ScoreBoardPage Name=@name Scores=@AllScores[i]/>
+    @foreach (var (name, i) in Names.Select((name, i) => (name, i)))
+    {
+        <ScoreBoardPage Name="@name" Scores="@AllScores[i]" />
+    }
+
+	<button @onclick=SaveScores>Save Scores</button>
 }
-
-<button @onclick="SaveScores">Save Scores</button>
-
+else
+{
+    <p>Loading...</p>
+}
 
 @code
 {
-	// public uint[] ScoreReferences = new uint[4];
+	[Parameter]
+	public int GameId { get; set; }
+	private List<ScoreBoard> scoreBoards = new();
+	// references to all scores in scoreboards
 	private List<uint[]> AllScores = new();
-	public string[] Names = {"John", "Steve", "Bob", "Cheeze"};
+	public string[] Names = null!;
 
-	protected override void OnInitialized()
+	protected override async Task OnInitializedAsync()
 	{
-		AllScores = Names.Select(_ => new uint[21]).ToList();
+		Game game = await GameService.GetGame(GameId);
+
+		scoreBoards = game.ScoreBoards.ToList();
+		AllScores = scoreBoards.Select(sb => sb.Scores).ToList();
+		Names = game.PlayerNames.Split(';').ToArray();
 	}
 
 	// Save scores to database
-	private void SaveScores() {
-		Console.WriteLine(string.Join(",", AllScores[0]));
+	async Task SaveScores()
+	{
+		await ScoreBoardService.UpdateScoreBoards(scoreBoards);
+		Console.WriteLine("Updated scoreboards for player(s)");
 	}
 }

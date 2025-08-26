@@ -1,4 +1,5 @@
 using BowlingApp.Entity;
+using System.Linq;
 using Microsoft.EntityFrameworkCore;
 
 namespace BowlingApp.Data

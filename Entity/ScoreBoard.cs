@@ -12,7 +12,7 @@ namespace BowlingApp.Entity
 		[Required]
 		public int GameId { get; set; }
 		// Navigation properties
-		public Game Game { get; set; } = new Game();
+		public Game Game { get; set; } = null!;
 	}
 }
 

@@ -1,0 +1,27 @@
+@page "/create-user"
+@using BowlingApp.Entity
+@using BowlingApp.Services
+@inject IUserService UserService
+@inject NavigationManager NavigationManager
+@rendermode InteractiveServer
+
+<InputText @bind-Value="@UserName" class="form-control" />
+
+<button class="btn btn-primary" @onclick="CreateUsers" disabled="@(!ValidUserName)">
+    Create User
+</button>
+
+@code
+{
+	private string UserName = string.Empty;
+	private bool ValidUserName => (UserName.Length > 3) && (UserName.All(char.IsLetter));
+	async Task CreateUsers()
+	{
+		Console.WriteLine(UserName);
+		User user = new();
+		user.Name = UserName;
+		await UserService.CreateUser(user);
+
+		NavigationManager.NavigateTo("/setup-game");
+	}
+}

@@ -7,9 +7,8 @@ namespace BowlingApp.Entity
 		[Key]
 		public int Id { get; set; }
 
-		[Required]
-		[MaxLength(15)]
-		public string Name { get; set; } = string.Empty;
+		[Required][MaxLength(15)]
+		public string Name { get; set; }
 
 		// Navigation properties
 		public ICollection<Game> Games { get; set; } = new List<Game>();

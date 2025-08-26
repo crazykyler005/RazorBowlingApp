@@ -1,0 +1,64 @@
+@page "/game-list/{UserId:int}"
+@using BowlingApp.Entity
+@using BowlingApp.Services
+@inject IGameService GameService
+@inject NavigationManager Navigation
+@rendermode InteractiveServer
+
+@if (games.Any())
+{
+	<h3>Game List:</h3><br>
+
+	@foreach (var game in games) {
+		<table class="table">
+			<thead>
+				<tr>
+					<td>Date Created</td>
+					<td>Players</td>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>@game.DateCreated.ToString()</td>
+					<td>@ParseNameString(game.PlayerNames)</td>
+				</tr>
+			</tbody>
+		</table>
+	}
+}
+
+<button class="btn btn-primary" @onclick=GotoSetupPage>Create New Game</button>
+
+@code
+{
+	[Parameter]
+	public int UserId { get; set; }
+
+	public List<Game> games = new(); 
+	public string[] Names = null!;
+
+	[Inject] private IServiceProvider Services { get; set; } = default!;
+	protected override async Task OnInitializedAsync()
+	{
+		games = await GameService.GetAllGamesFromUserId(UserId);
+	}
+
+	private string ParseNameString(string PlayerNames) {
+		return PlayerNames.Replace(';',' ');
+	}
+
+	private uint SumScores(uint[] Scores) {
+		uint Total = 0;
+
+		foreach (var score in Scores) {
+			Total += score;
+		}
+
+		return Total;
+	}
+
+	private void GotoSetupPage()
+	{
+		Navigation.NavigateTo("/setup-game"); // replace with your route
+	}
+}
