@@ -66,6 +66,8 @@
 
 	private async Task DeleteGame(int GameId) {
 		await GameService.DeleteGame(GameId);
+		
+		// refresh page
 		Navigation.NavigateTo(Navigation.Uri, forceLoad: true);
 	}
 
