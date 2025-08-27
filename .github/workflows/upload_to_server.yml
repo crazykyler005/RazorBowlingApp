@@ -1,0 +1,39 @@
+name: Secure Server Upload
+
+# on:
+#   workflow_dispatch: # run manually
+#   push:
+#     branches: [ "main" ]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Install Wireguard + SSH
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y Wireguard openssh-client sshpass
+
+      - name: Configure WireGuard
+        run: |
+          echo "${{ secrets.WG_CONFIG }}" > wg0.conf
+          sudo wg-quick up ./wg0.conf
+        shell: bash
+
+      - name: Sync repository respecting .gitignore
+        env:
+          SSH_PASS: ${{ secrets.SSH_PASSWORD }}
+        run: |
+          # sshpass -e git ls-files -co --exclude-standard -z | xargs -0 rsync -avz --delete --files-from=- ./ ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:${{ secrets.CODE_DIRECTORY }}/bowling_test/
+          sshpass -e rsync -avz --delete $(git ls-files -co --exclude-standard) ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:${{ secrets.CODE_DIRECTORY }}/bowling_test/
+
+      - name: Tear down WireGuard
+        if: always()
+        run: |
+          sudo wg-quick down ./wg0.conf
+
+
+        
