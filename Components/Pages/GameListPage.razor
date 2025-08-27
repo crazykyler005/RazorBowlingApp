@@ -3,7 +3,8 @@
 @using BowlingApp.Services
 @inject IGameService GameService
 @inject NavigationManager Navigation
-@rendermode InteractiveServer
+@* @rendermode InteractiveServer  *@
+@* @(new InteractiveServerRenderMode(prerender:false)) *@
 
 @if (games.Any())
 {
