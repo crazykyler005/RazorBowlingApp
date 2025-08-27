@@ -35,5 +35,5 @@ namespace BowlingApp.Services
 
 			await _context.SaveChangesAsync(); // one call to DB
 		}
-    }
+	}
 }
